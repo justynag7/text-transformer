@@ -11,6 +11,6 @@ public class UpperTransformer extends Decorator{
     }
 
     public String transform(String text){
-        return upper(text);
+        return upper(transformer.transform(text));
     }
 }

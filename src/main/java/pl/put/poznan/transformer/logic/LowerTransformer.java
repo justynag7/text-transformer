@@ -11,6 +11,6 @@ public class LowerTransformer extends Decorator {
     }
 
     public String transform(String text){
-        return lower(text);
+        return lower(transformer.transform(text));
     }
 }

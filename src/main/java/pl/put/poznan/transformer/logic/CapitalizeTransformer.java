@@ -22,7 +22,6 @@ public class CapitalizeTransformer extends Decorator{
     }
 
     public String transform(String text){
-
-        return capitalize(text);
+        return capitalize(transformer.transform(text));
     }
 }

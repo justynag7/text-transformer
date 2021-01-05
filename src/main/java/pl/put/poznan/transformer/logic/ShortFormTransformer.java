@@ -44,7 +44,6 @@ public class ShortFormTransformer extends Decorator{
     }
 
     public String transform(String text){
-
-        return toShortForm(text);
+        return toShortForm(transformer.transform(text));
     }
 }

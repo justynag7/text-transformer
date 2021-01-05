@@ -47,7 +47,6 @@ public class InverseTransformer extends Decorator{
     }
 
     public String transform(String text){
-
-        return inverse(text);
+        return inverse(transformer.transform(text));
     }
 }

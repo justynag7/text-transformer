@@ -13,7 +13,6 @@ public class LatexFormatTransformer extends Decorator{
     }
 
     public String transform(String text){
-
-        return latexFormat(text);
+        return latexFormat(transformer.transform(text));
     }
 }

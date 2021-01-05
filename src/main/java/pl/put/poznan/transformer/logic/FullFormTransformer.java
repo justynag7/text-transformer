@@ -45,7 +45,6 @@ public class FullFormTransformer extends Decorator{
     }
 
     public String transform(String text){
-
-        return toFullForm(text);
+        return toFullForm(transformer.transform(text));
     }
 }

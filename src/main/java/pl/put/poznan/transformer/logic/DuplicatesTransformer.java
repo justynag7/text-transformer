@@ -25,7 +25,6 @@ public class DuplicatesTransformer extends Decorator{
     }
 
     public String transform(String text){
-
-        return duplicates(text);
+        return duplicates(transformer.transform(text));
     }
 }

@@ -14,7 +14,7 @@ public class TextTransformerController {
     private static final Logger logger = LoggerFactory.getLogger(TextTransformerController.class);
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<String> get(@PathVariable String text,
-                              @RequestParam(value="transforms", defaultValue="upper,escape") String[] transforms) {
+                              @RequestParam(value="transforms", defaultValue="nochange") String[] transforms) {
         logger.debug(text);
         logger.debug(Arrays.toString(transforms));
         try {

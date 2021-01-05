@@ -7,13 +7,11 @@ public class UpperTransformer extends Decorator{
     }
 
     private String upper(String text){
-
-        return text.toUpperCase();
+        text = text.toUpperCase();
+        return text;
     }
 
     public String transform(String text){
-
-
-        return upper(super.transform(text));
+        return upper(text);
     }
 }

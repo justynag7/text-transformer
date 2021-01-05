@@ -4,7 +4,7 @@ import pl.put.poznan.transformer.exceptions.BadTextTransformationException;
 
 import javax.xml.transform.Transformer;
 
-public class TextTransformer implements InterfaceTextTransformer{
+public class TextTransformer{
     private InterfaceTextTransformer transformer;
 
     public TextTransformer(String[] transforms) throws BadTextTransformationException{
@@ -36,6 +36,8 @@ public class TextTransformer implements InterfaceTextTransformer{
                     break;
                 case "duplicates":
                     transformer = new DuplicatesTransformer(transformer);
+                    break;
+                case "nochange":
                     break;
                 default:
                      throw new BadTextTransformationException();

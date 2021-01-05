@@ -2,6 +2,8 @@ package pl.put.poznan.transformer.logic;
 
 import pl.put.poznan.transformer.exceptions.BadTextTransformationException;
 
+import javax.xml.transform.Transformer;
+
 public class TextTransformer implements InterfaceTextTransformer{
     private InterfaceTextTransformer transformer;
 
@@ -12,34 +14,28 @@ public class TextTransformer implements InterfaceTextTransformer{
                 case "upper":
                     transformer = new UpperTransformer(transformer);
                 case "lower":
-                    //to do
+                    transformer = new LowerTransformer(transformer);
                     break;
                 case "capitalize":
-                    //to do
+                    transformer = new CapitalizeTransformer(transformer);
                     break;
                 case "inverse":
-                    //to do
+                    transformer = new InverseTransformer(transformer);
                     break;
-                case "superinverse":
-                    //to do z zachowaniem wielkich i malych liter
-                    break;
-                case "integers":
+                case "numbersToText":
                     //zamiana liczb całkowitych do 1000
                     break;
-                case "floats":
-                    //zamiana liczb zmiennoprzecinkowych do części setnych
+                case "toShortForm":
+                    transformer = new ShortFormTransformer(transformer);
                     break;
-                case "shortcuts":
-                    //na przykład -> np. itp niezależnie od wielkości liter
+                case "toFullForm":
+                    transformer = new FullFormTransformer(transformer);
                     break;
-                case "cutshorts":
-                    //rozwiniecie skrótu prof -> profesor
-                    break;
-                case "latexformat":
-                    //przeksztalcenie tekstu do formatu wspieranego przez latex
+                case "latexFormat":
+                    transformer = new LatexFormatTransformer(transformer);
                     break;
                 case "duplicates":
-                    //zamiana dowolnej liczby powtarzających się wyrazów
+                    transformer = new DuplicatesTransformer(transformer);
                     break;
                 default:
                      throw new BadTextTransformationException();
@@ -47,8 +43,8 @@ public class TextTransformer implements InterfaceTextTransformer{
         }
     }
 
-    public String transform(String text)
-    {
+    public String transform(String text){
+
         return this.transformer.transform(text);
     }
 }

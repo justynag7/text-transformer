@@ -13,6 +13,7 @@ public class TextTransformer{
             switch(transform){
                 case "upper":
                     transformer = new UpperTransformer(transformer);
+                    break;
                 case "lower":
                     transformer = new LowerTransformer(transformer);
                     break;
@@ -47,6 +48,6 @@ public class TextTransformer{
 
     public String transform(String text){
 
-        return this.transformer.transform(text);
+        return transformer.transform(text);
     }
 }

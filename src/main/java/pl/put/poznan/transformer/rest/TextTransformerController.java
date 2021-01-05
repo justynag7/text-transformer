@@ -22,7 +22,7 @@ public class TextTransformerController {
             return new ResponseEntity<>(transformer.transform(text), HttpStatus.OK);
         }
         catch(BadTextTransformationException e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Transformation error!", HttpStatus.BAD_REQUEST);
         }
     }
 

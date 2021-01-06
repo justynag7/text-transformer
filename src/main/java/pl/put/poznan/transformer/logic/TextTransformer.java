@@ -24,7 +24,7 @@ public class TextTransformer{
                     transformer = new InverseTransformer(transformer);
                     break;
                 case "numbersToText":
-                    //zamiana liczb całkowitych do 1000
+                    transformer = new NumbersToTextTransformer(transformer);
                     break;
                 case "toShortForm":
                     transformer = new ShortFormTransformer(transformer);

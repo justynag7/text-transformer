@@ -3,11 +3,31 @@ package pl.put.poznan.transformer.logic;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Klasa sluzaca do transformacji tekstu do postaci odwroconej kolejnosci liter w slowach z zachowaniem kolejnosci ich wielkosci
+ *
+ * 
+ */
+
 public class InverseTransformer extends Decorator{
+    
+    /**
+     * konstruktor tworzacy obiekt dekorujacy podany TextTransformer
+     *
+     *@param transformer typu TextTransformer
+     */
 
     public InverseTransformer(InterfaceTextTransformer transformer){
         super(transformer);
     }
+    
+     /**
+     * Metoda transformujaca tekst do postaci odwroconej kolejnosci liter w slowach
+     *
+     * @param text typu String przechowuje tekst majacy zostac poddany transformacji
+     * @return zwracany jest przetransformowany tekst
+     *
+     */
 
     private String inverse(String text){
 
@@ -45,6 +65,14 @@ public class InverseTransformer extends Decorator{
         text = tmpReverse;
         return text;
     }
+    
+    /**
+     * Metoda przekazujaca aktualna modyfikacje textu do transformera, ktory nastepnie wykona metode inverse
+     *
+     * @param text typu String przechowuje tekst majacy zostac poddany transformacji
+     * @return zwracane jest wywolanie metody inverse
+     *
+     */
 
     public String transform(String text){
         return inverse(transformer.transform(text));

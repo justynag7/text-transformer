@@ -2,10 +2,17 @@ package pl.put.poznan.transformer.app;
 
 
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import pl.put.poznan.transformer.exceptions.BadTextTransformationException;
+import pl.put.poznan.transformer.logic.TextTransformer;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLOutput;
+import java.util.ArrayList;
 
 public class LaunchPanel  extends JFrame implements ActionListener {
 
@@ -69,7 +76,7 @@ public class LaunchPanel  extends JFrame implements ActionListener {
         letterBox.setFocusable(false);
         letterBox.addActionListener(this);
 
-        String [] shortsOption = {"--Shortcuts options--","expand","colapse"};
+        String [] shortsOption = {"--Shortcuts options--","toFullForm","toShortForm"};
         shortsBox = new JComboBox(shortsOption);
         shortsBox.setBounds(585,100,150,20);
         shortsBox.setFocusable(false);
@@ -133,36 +140,54 @@ public class LaunchPanel  extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==submitButton){
-
-            System.out.println(textArea.getText());
-
+            //System.out.println(textArea.getText());
+            String text = textArea.getText();
+            //System.out.println(text);
+            String [] transforms = new String[30];
+            for(int i=0;i<30;i++)
+            {
+                transforms[i] = "nochange";
+            }
+            int n = 0;
             if(letterBox.getSelectedIndex()!=0){
-                //TODO
-                System.out.println(letterBox.getSelectedItem());
+                transforms[n++] = letterBox.getSelectedItem().toString().toLowerCase();
+                //System.out.println(letterBox.getSelectedItem());
             }
             if(shortsBox.getSelectedIndex()!=0){
-                //TODO
-                System.out.println(shortsBox.getSelectedItem());
+                transforms[n++] = shortsBox.getSelectedItem().toString();
+                //System.out.println(shortsBox.getSelectedItem());
             }
             if(reverseBox.isSelected()){
-                //TODO
-                System.out.println("Reverse option is selected");
+                transforms[n++] = "inverse";
+                //System.out.println("Reverse option is selected");
             }
             if(removeBox.isSelected()){
-                //TODO
-                System.out.println("Remowe repeats option is selected");
+                transforms[n++] = "duplicates";
+                //System.out.println("Remove repeats option is selected");
             }
             if(numbersBox.isSelected()){
-                //TODO
-                System.out.println("Numbers to words option is selected");
+                transforms[n++] = "numbersToText";
+                //System.out.println("Numbers to words option is selected");
             }
-            if(latexBox.isSelected()){
-                //TODO
-                System.out.println("Latex transformation option is selected");
+            if(latexBox.isSelected()) {
+                transforms[n++] = "latexFormat";
+                //System.out.println("Latex transformation option is selected");
             }
-            //TODO
+            try {
+                TextTransformer transformer = new TextTransformer(transforms);
+                text = transformer.transform(text);
+            }
+            catch(BadTextTransformationException ex){
+                System.out.println("Error! Transformation error!");
+            }
+            /*
+            for(int i=0;i<10;i++)
+            {
+                System.out.println(transforms[i]);
+            }*/
             System.out.println("-------TEXT TRANSFORMED!-------");
-            outputArea.setText(textArea.getText());
+
+            outputArea.setText(text);
 
         }
 

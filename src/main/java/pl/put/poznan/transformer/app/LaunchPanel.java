@@ -40,7 +40,7 @@ public class LaunchPanel  extends JFrame implements ActionListener {
         titleLabel.setBounds(60,0,650,100);
 
         versionLabel = new JLabel();
-        versionLabel.setText("ver. 1.0");
+        versionLabel.setText("ver. 0.2");
         versionLabel.setHorizontalAlignment(JLabel.RIGHT);
         versionLabel.setVerticalAlignment(JLabel.BOTTOM);
         versionLabel.setForeground(new Color(0,0,0)); // set font color of text

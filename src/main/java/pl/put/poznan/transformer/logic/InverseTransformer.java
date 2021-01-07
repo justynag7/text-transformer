@@ -31,39 +31,54 @@ public class InverseTransformer extends Decorator{
 
     private String inverse(String text){
 
-        char[] textToChars = text.toCharArray();
-        List<Integer> s = new ArrayList<Integer>();
-        for (int i = 0; i < text.length(); i++){
-            if (textToChars[i] >= 'A' && textToChars[i] <= 'Z'){
-                s.add(i);
+        String[] words = text.split(" ");
+        StringBuilder result = new StringBuilder();
+
+        for (String word : words){
+            char[] textToChars = word.toCharArray();
+            List<Integer> s = new ArrayList<Integer>();
+            for (int i = 0; i < word.length(); i++){
+                if (textToChars[i] >= 'A' && textToChars[i] <= 'Z'){
+                    s.add(i);
+                }
             }
-        }
-        String tmpReverse = "";
-        for (int j = text.length()-1; j >= 0; j--){
-            tmpReverse += text.charAt(j);
-        }
-        text = tmpReverse;
-        textToChars = text.toCharArray();
-        tmpReverse = "";
-        int idx = 0;
-        for (int i = 0; i < text.length(); i++){
-            if (s.get(idx) == i){
-                if (textToChars[i] >= 'a' && textToChars[i] <= 'z'){
-                    textToChars[i] -= 32;
+            String tmpReverse = "";
+            for (int j = word.length()-1; j >= 0; j--){
+                tmpReverse += word.charAt(j);
+            }
+            word = tmpReverse;
+            textToChars = word.toCharArray();
+            String tmpReverse2 = "";
+            System.out.println(word);
+            int idx = 0;
+            if(s.size()>0){
+                for (int i = 0; i < word.length(); i++){
+                    if (s.get(idx) == i){
+                        if (textToChars[i] >= 'a' && textToChars[i] <= 'z'){
+                            textToChars[i] -= 32;
+                        }
+                        if (idx < s.size()-1){
+                            idx += 1;
+                        }
+                    }
+                    else{
+                        if (textToChars[i] >= 'A' && textToChars[i] <= 'Z'){
+                            textToChars[i] += 32;
+                        }
+                    }
+                    tmpReverse2 += textToChars[i];
                 }
-                if (idx < s.size()-1){
-                    idx += 1;
-                }
+                word = tmpReverse;
             }
             else{
-                if (textToChars[i] >= 'A' && textToChars[i] <= 'Z'){
-                    textToChars[i] += 32;
-                }
+                word = tmpReverse;
             }
-            tmpReverse += textToChars[i];
+            result.append(word);
+            result.append(" ");
         }
-        text = tmpReverse;
+        text = result.toString();
         return text;
+
     }
     
     /**

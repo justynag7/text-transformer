@@ -21,6 +21,7 @@ public class LaunchPanel  extends JFrame implements ActionListener {
     JLabel versionLabel;
     JTextArea textArea;
     JTextArea outputArea;
+    JTextArea optionsArea;
     JComboBox letterBox;
     JComboBox shortsBox;
     JCheckBox reverseBox;
@@ -28,6 +29,9 @@ public class LaunchPanel  extends JFrame implements ActionListener {
     JCheckBox removeBox;
     JCheckBox latexBox;
     JButton submitButton;
+    JButton addButton;
+    JButton clearButton;
+    JComboBox comboBox;
 
     LaunchPanel(){
 
@@ -70,17 +74,26 @@ public class LaunchPanel  extends JFrame implements ActionListener {
         outputArea.setText("(Output)");
         outputArea.setEditable(false);
 
+        optionsArea = new JTextArea();
+        optionsArea.setPreferredSize(new Dimension(400,150));
+        optionsArea.setBounds(425,150,340,150);
+        optionsArea.setEditable(false);
+        optionsArea.setLineWrap(true);
+        optionsArea.setWrapStyleWord(true);
+
         String[] lettersOption = {"--Letters Options--","UPPER", "lower","Capitalize" };
         letterBox = new JComboBox(lettersOption);
         letterBox.setBounds(425,100,150,20);
         letterBox.setFocusable(false);
         letterBox.addActionListener(this);
+        letterBox.setVisible(false);
 
         String [] shortsOption = {"--Shortcuts options--","toFullForm","toShortForm"};
         shortsBox = new JComboBox(shortsOption);
         shortsBox.setBounds(585,100,150,20);
         shortsBox.setFocusable(false);
         shortsBox.addActionListener(this);
+        shortsBox.setVisible(false);
 
         reverseBox = new JCheckBox();
         reverseBox.setText("Reverse letters");
@@ -88,6 +101,7 @@ public class LaunchPanel  extends JFrame implements ActionListener {
         reverseBox.setBounds(425,130,150,20);
         reverseBox.setFocusable(false);
         reverseBox.addActionListener(this);
+        reverseBox.setVisible(false);
 
         numbersBox = new JCheckBox();
         numbersBox.setText("Numbers to words");
@@ -95,6 +109,7 @@ public class LaunchPanel  extends JFrame implements ActionListener {
         numbersBox.setBounds(585,130,150,20);
         numbersBox.setFocusable(false);
         numbersBox.addActionListener(this);
+        numbersBox.setVisible(false);
 
         removeBox = new JCheckBox();
         removeBox.setText("Remove repeats");
@@ -102,6 +117,7 @@ public class LaunchPanel  extends JFrame implements ActionListener {
         removeBox.setBounds(425,160,150,20);
         removeBox.setFocusable(false);
         removeBox.addActionListener(this);
+        removeBox.setVisible(false);
 
         latexBox = new JCheckBox();
         latexBox.setText("Latex transformation");
@@ -109,13 +125,36 @@ public class LaunchPanel  extends JFrame implements ActionListener {
         latexBox.setBounds(585,160,150,20);
         latexBox.setFocusable(false);
         latexBox.addActionListener(this);
+        latexBox.setVisible(false);
 
         submitButton = new JButton();
         submitButton.setText("Submit");
-        submitButton.setBounds(425,190,310,40);
+        submitButton.setBounds(425,310,340,40);
         submitButton.setFocusable(false);
         submitButton.setBorder(BorderFactory.createEtchedBorder());
         submitButton.addActionListener(this);
+
+        clearButton = new JButton();
+        clearButton.setText("Clear");
+        clearButton.setBounds(665,100,100,40);
+        clearButton.setFocusable(false);
+        clearButton.setBorder(BorderFactory.createEtchedBorder());
+        clearButton.addActionListener(this);
+
+        addButton = new JButton();
+        addButton.setText("Add");
+        addButton.setBounds(555,100,100,40);
+        addButton.addActionListener(this);
+
+        String [] options = {"--Options--","upper", "lower",
+                             "capitalize","toShortForm","toFullForm","inverse",
+                             "duplicates", "numbersToText", "latexFormat"};
+        
+        comboBox = new JComboBox(options);
+        comboBox.setBounds(425,100,120,40);
+        comboBox.setFocusable(false);
+        comboBox.addActionListener(this);
+
 
         frame = new JFrame("Text Transformer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -133,17 +172,45 @@ public class LaunchPanel  extends JFrame implements ActionListener {
         frame.add(latexBox);
         frame.add(submitButton);
         frame.add(versionLabel);
+        frame.add(comboBox);
+        frame.add(optionsArea);
+        frame.add(addButton);
+        frame.add(clearButton);
         frame.setVisible(true);
 
     }
+    String opt = "";
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if(e.getSource()==addButton){
+            opt= opt + comboBox.getSelectedItem().toString() ;
+            optionsArea.setText(opt);
+            opt = opt + ",";
+
+        }
+        if(e.getSource()==clearButton){
+            opt="";
+            optionsArea.setText(opt);
+        }
         if(e.getSource()==submitButton){
-            //System.out.println(textArea.getText());
+
+
             String text = textArea.getText();
-            //System.out.println(text);
+
+            String[] transform = optionsArea.getText().split(",");
+            try {
+                TextTransformer transformer = new TextTransformer(transform);
+                text = transformer.transform(text);
+            }
+            catch(BadTextTransformationException ex){
+                System.out.println("Error! Transformation error!");
+            }
+
+
+            /*
             String [] transforms = new String[30];
+
             for(int i=0;i<30;i++)
             {
                 transforms[i] = "nochange";

@@ -1,11 +1,31 @@
 package pl.put.poznan.transformer.logic;
 
+/**
+ * Klasa sluzaca do transformacji tekstu do postaci bez powtorzen wyrazow
+ *
+ *
+ */
+
 public class DuplicatesTransformer extends Decorator{
+    
+    /**
+     * konstruktor tworzacy obiekt dekorujacy podany TextTransformer
+     *
+     *@param transformer typu TextTransformer
+     */
 
     public DuplicatesTransformer(InterfaceTextTransformer transformer){
 
         super(transformer);
     }
+    
+    /**
+     * Metoda transformujaca tekst do postaci bez powtorzen wyrazow
+     *
+     * @param text typu String przechowuje tekst majacy zostac poddany transformacji
+     * @return zwracany jest przetransformowany tekst
+     *
+     */
 
     private String duplicates(String text){
 
@@ -23,6 +43,14 @@ public class DuplicatesTransformer extends Decorator{
         }
         return result.toString();
     }
+    
+    /**
+     * Metoda przekazujaca aktualna modyfikacje textu do transformera, ktory nastepnie wykona metode duplicates
+     *
+     * @param text typu String przechowuje tekst majacy zostac poddany transformacji
+     * @return zwracane jest wywolanie metody duplicates
+     *
+     */
 
     public String transform(String text){
         return duplicates(transformer.transform(text));

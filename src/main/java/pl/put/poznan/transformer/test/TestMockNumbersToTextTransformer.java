@@ -1,0 +1,119 @@
+package pl.put.poznan.transformer.test;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import org.junit.Before;
+import org.junit.Test;
+import pl.put.poznan.transformer.logic.*;
+
+
+public class TestMockNumbersToTextTransformer {
+        private TextParser mockParser;
+
+        @Before
+        public void create() {
+
+            mockParser = mock(TextParser.class);
+        }
+
+        @Test
+        public void test1() {
+            // konfiguracja
+            when(mockParser.transform()).thenReturn("123");
+            // interakcja
+            Decorator dec = new NumbersToTextTransformer(mockParser);
+            String result = dec.transform();
+            // weryfikacja
+            verify(mockParser).transform();
+            assertEquals("sto dwadzieścia trzy",result);
+
+        }
+
+        @Test
+        public void test2() {
+            when(mockParser.transform()).thenReturn("0");
+            Decorator dec = new NumbersToTextTransformer(mockParser);
+            String result = dec.transform();
+            verify(mockParser).transform();
+            assertEquals("zero",result);
+        }
+
+        @Test
+        public void test3() {
+            when(mockParser.transform()).thenReturn("100000");
+            Decorator dec = new NumbersToTextTransformer(mockParser);
+            String result = dec.transform();
+            verify(mockParser).transform();
+            assertEquals("sto tysięcy",result);
+        }
+
+        @Test
+        public void test4() {
+            when(mockParser.transform()).thenReturn("2137");
+            Decorator dec = new NumbersToTextTransformer(mockParser);
+            String result = dec.transform();
+            verify(mockParser).transform();
+            assertEquals("dwa tysiące sto trzydzieści siedem",result);
+        }
+
+        @Test
+        public void test5() {
+            when(mockParser.transform()).thenReturn("99000");
+            Decorator dec = new NumbersToTextTransformer(mockParser);
+            String result = dec.transform();
+            verify(mockParser).transform();
+            assertEquals("dziewięćdziesiąt dziewięć tysięcy",result);
+        }
+
+        @Test
+        public void test6() {
+            when(mockParser.transform()).thenReturn("1000000");
+            Decorator dec = new NumbersToTextTransformer(mockParser);
+            String result = dec.transform();
+            verify(mockParser).transform();
+            assertEquals("milion",result);
+        }
+
+        @Test
+        public void test7() {
+            when(mockParser.transform()).thenReturn("1000001");
+            Decorator dec = new NumbersToTextTransformer(mockParser);
+            String result = dec.transform();
+            verify(mockParser).transform();
+            assertEquals("milion jeden",result);
+        }
+
+        @Test
+        public void test8() {
+            when(mockParser.transform()).thenReturn("999999999");
+            Decorator dec = new NumbersToTextTransformer(mockParser);
+            String result = dec.transform();
+            verify(mockParser).transform();
+            assertEquals("dziewięćset dziewięćdziesiąt dziewięć milionów dziewięćset dziewięćdziesiąt dziewięć tysięcy dziewięćset dziewięćdziesiąt dziewięć",result);
+        }
+
+        @Test
+        public void test9() {
+            when(mockParser.transform()).thenReturn("x 1 x2 x trzy");
+            Decorator dec = new NumbersToTextTransformer(mockParser);
+            String result = dec.transform();
+            verify(mockParser).transform();
+            assertEquals("x jeden x2 x trzy",result);
+        }
+
+        @Test
+        public void test10() {
+            when(mockParser.transform()).thenReturn("100 sto      100");
+            Decorator dec = new NumbersToTextTransformer(mockParser);
+            String result = dec.transform();
+            verify(mockParser).transform();
+            assertEquals("sto sto      sto",result);
+        }
+
+
+
+}
+
+
